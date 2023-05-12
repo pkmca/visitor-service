@@ -1,6 +1,7 @@
 package com.example.visitorservice.controller;
 
 import com.example.visitorservice.ResponseHandler;
+import com.example.visitorservice.constants.VisitorStatus;
 import com.example.visitorservice.dto.VisitorDto;
 import com.example.visitorservice.service.SecurityService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,12 @@ public class SecurityController {
   @PostMapping(value = "/addVisitor")
   public ResponseEntity<Map<String,Object>> addVisitor(@RequestBody VisitorDto visitorDto){
     securityService.addVisitorDetails(visitorDto);
+    return ResponseHandler.generateResponse(HttpStatus.OK, true, true);
+  }
+
+  @PatchMapping(value = "/approve/{id}")
+  public ResponseEntity<Map<String,Object>> updateStatus(@PathVariable Integer id, @RequestParam VisitorStatus visitorStatus){
+    securityService.updateStatus(id, visitorStatus);
     return ResponseHandler.generateResponse(HttpStatus.OK, true, true);
   }
 }
