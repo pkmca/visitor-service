@@ -15,6 +15,9 @@ import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.time.LocalDate;
+import java.util.List;
+
 @Service
 public class VisitorServiceImpl implements VisitorService {
 
@@ -50,6 +53,16 @@ public class VisitorServiceImpl implements VisitorService {
         visitorDetails.setVisitorStatus(visitorStatus);
         visitorRepository.save(visitorDetails);
         kafkaTemplate.send("visitorStatus", visitorDetails.toString());
+    }
+
+    @Override
+    public List<VisitorDetails> getAllVisitor(LocalDate date) {
+       return visitorRepository.findAllByDate(date);
+    }
+
+    @Override
+    public List<VisitorDetails> getAllVisitorByFlatNumber(String flatNumber) {
+        return visitorRepository.findAllByFlatNumber(flatNumber);
     }
 
     public void publishToKafka(VisitorDetails visitorDetails){

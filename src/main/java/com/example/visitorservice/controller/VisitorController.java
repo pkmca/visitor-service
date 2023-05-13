@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.Map;
 
 @RestController
@@ -22,6 +23,16 @@ public class VisitorController {
   public ResponseEntity<Map<String,Object>> addVisitor(@RequestBody VisitorDto visitorDto){
     visitorService.addVisitorDetails(visitorDto);
     return ResponseHandler.generateResponse(HttpStatus.OK, true, true);
+  }
+
+  @GetMapping(value = "/all")
+  public ResponseEntity<Map<String,Object>> getAllVisitor(@RequestParam LocalDate date){
+    return ResponseHandler.generateResponse(HttpStatus.OK, true, visitorService.getAllVisitor(date));
+  }
+
+  @GetMapping(value = "/flat/{flatNumber}")
+  public ResponseEntity<Map<String,Object>> getAllVisitorByFlatNumber(@PathVariable String flatNumber){
+    return ResponseHandler.generateResponse(HttpStatus.OK, true, visitorService.getAllVisitorByFlatNumber(flatNumber));
   }
 
   @PatchMapping(value = "/approve/{id}")

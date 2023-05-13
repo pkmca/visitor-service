@@ -4,6 +4,7 @@ import com.example.visitorservice.constants.VisitorStatus;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.Date;
 
 import static com.example.visitorservice.constants.VisitorStatus.PENDING;
@@ -36,6 +37,8 @@ public class VisitorDetails {
     private String ownerEmail;
 
     private String ownerContactNumber;
+
+    private LocalDate date;
 
     @Enumerated(EnumType.STRING)
     private VisitorStatus visitorStatus = PENDING;
