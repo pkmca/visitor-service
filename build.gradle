@@ -42,6 +42,9 @@ dependencies {
 	implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
 	implementation 'org.springframework.cloud:spring-cloud-starter-sleuth'
 	implementation 'org.springframework.cloud:spring-cloud-sleuth-zipkin'
+	// https://mvnrepository.com/artifact/io.github.resilience4j/resilience4j-spring-boot2
+	implementation 'org.springframework.cloud:spring-cloud-starter-circuitbreaker-resilience4j'
+
 
 
 }

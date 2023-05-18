@@ -10,10 +10,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -25,19 +23,16 @@ public class VisitorServiceImpl implements VisitorService {
 
     @Autowired
     private VisitorRepository visitorRepository;
-    @Autowired
-    private RestTemplate restTemplate;
 
-    @Value("${user.service.url}")
-    private String userServiceUrl;
+    @Autowired
+    private UserIntegService userIntegService;
 
     @Autowired
     private KafkaTemplate<String, String> kafkaTemplate;
 
     @Override
     public void addVisitorDetails(VisitorDto visitorDto) {
-        String url = userServiceUrl + "/user/flat/" + visitorDto.getFlatNumber();
-        UserDto response = restTemplate.getForObject(url, UserDto.class);
+        UserDto response = userIntegService.getUserDetailsByFlatNumber(visitorDto.getFlatNumber());
         VisitorDetails visitorDetails = new VisitorDetails();
         BeanUtils.copyProperties(visitorDto,visitorDetails);
         visitorDetails.setOwnerEmail(response.getEmail());
